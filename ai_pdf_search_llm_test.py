@@ -1,7 +1,9 @@
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# (위의 코드3줄은 해당 이슈로 인해 적어줘야 함 : https://discuss.streamlit.io/t/issues-with-chroma-and-sqlite/47950)
 
+# 필요한 module import 
 from langchain.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import Chroma
@@ -19,12 +21,16 @@ button(username="kerin07", floating=True, width=221)
 
 
 #제목
-st.title("ChatPDF")
+st.title("Communication with PDF")
 st.write("---") # st.write() 에서 마크다운 문법사용가능, '---': 구분선 기능 
 
-#OpenAI KEY 입력 받기 (사용자에게)
-openai_key = st.text_input('OPEN_AI_API_KEY', type="password")
 
+
+#OpenAI KEY 입력 받기 (사용자에게)
+openai_key = st.text_input('본인의 OPENAI_API_KEY를 입력해주세요', type="password")
+
+st.write("---") # st.write() 에서 마크다운 문법사용가능, '---': 구분선 기능 
+st.subheader('pdf를 넣으면 pdf에 대해 질문할 수 있어요 ', divider='rainbow')
 #파일 업로드
 uploaded_file = st.file_uploader("PDF 파일을 올려주세요!", type=['pdf']) # type옵션은 pdf 형식으로 제한 두겠다는 의미 
 st.write("---")
